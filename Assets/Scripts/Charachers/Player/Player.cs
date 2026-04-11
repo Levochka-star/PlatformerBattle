@@ -8,7 +8,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
-
+    
     private Mover _mover;
     private Jumper _jumper;
     private Rotator _rotator;
@@ -38,14 +38,6 @@ public class Player : MonoBehaviour
         _inputReader.HorizontalIsRunStarted -= SetRun;
         _inputReader.HorizontalMovementStarted -= OnMove;
         _inputReader.VertiсalMovementStarted -= OnJump;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.TryGetComponent(out Coin coin))
-        {
-            coin.gameObject.SetActive(false);
-        }
     }
 
     private void OnMove(float vectorX)

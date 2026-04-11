@@ -34,9 +34,9 @@ public class AnimationPlayerSwitch : MonoBehaviour
         _animator.SetBool(PlayerAnimatorData.Parametrs.IsWalking, isWalking);
     }
 
-    private void Run(bool isWalking)
+    private void Run(bool isRuning)
     {
-        _animator.SetBool(PlayerAnimatorData.Parametrs.IsRuning, isWalking);
+        _animator.SetBool(PlayerAnimatorData.Parametrs.IsRuning, isRuning);
     }
 
     private void Jump()
