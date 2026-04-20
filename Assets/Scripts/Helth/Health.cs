@@ -19,15 +19,14 @@ public class Health : MonoBehaviour, IHealable, IDamageble
             _maxHealth = _currentHealth;
         }
     }
+    private void Start()
+    {
+        TryDie();
+    }
 
     private void Update()
     {
         _healthBar.SetHealthPoint(_currentHealth, _maxHealth);
-
-        if (_currentHealth <= _minHealth)
-        {
-            Die();
-        }
     }
 
     public void Heal(float amout)
@@ -44,6 +43,8 @@ public class Health : MonoBehaviour, IHealable, IDamageble
     public void TakeDamage(float amout)
     {
         ApplyHeal(amout, true);
+
+        TryDie();
     }
 
     private void ApplyHeal(float amout, bool isDamage = false)
@@ -83,8 +84,11 @@ public class Health : MonoBehaviour, IHealable, IDamageble
         }
     }
 
-    private void Die()
+    private void TryDie()
     {
-        Destroy(gameObject);
+        if (_currentHealth <= _minHealth)
+        {
+            Destroy(gameObject);
+        }
     }
 }

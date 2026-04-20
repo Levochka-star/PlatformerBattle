@@ -6,7 +6,7 @@ public class Damager : MonoBehaviour
     [SerializeField] private float _damageForHit;
     [SerializeField, Range(1f, 100f)] private float _hitForSecond = 1;
 
-    private Coroutine _WaitReload = null;
+    private Coroutine _waitReload = null;
     private float _delayHit;
 
     private void Awake()
@@ -20,7 +20,7 @@ public class Damager : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out IDamageble damageble))
         {
-            if (_WaitReload == null)
+            if (_waitReload == null)
             {
                 damageble.TakeDamage(_damageForHit);
                 StartWaitDamage();
@@ -30,21 +30,21 @@ public class Damager : MonoBehaviour
 
     private void StartWaitDamage()
     {
-        if (_WaitReload != null)
+        if (_waitReload != null)
         {
-            StopCoroutine(_WaitReload);
+            StopCoroutine(_waitReload);
         }
 
-        _WaitReload = StartCoroutine(WaitSecond());
+        _waitReload = StartCoroutine(WaitSecond());
     }
 
     private void StopWaitDamage()
     {
-        if (_WaitReload != null)
+        if (_waitReload != null)
         {
-            StopCoroutine(_WaitReload);
+            StopCoroutine(_waitReload);
 
-            _WaitReload = null;
+            _waitReload = null;
         }
     }
 

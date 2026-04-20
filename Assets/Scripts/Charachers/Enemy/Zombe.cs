@@ -24,8 +24,8 @@ public class Zombe : MonoBehaviour
     private bool _isPatrol = true;
 
     private float _vectorX;
-    private float vectorXRight = 1f;
-    private float vectorXLeft = -1f;
+    private float _vectorXRight = 1f;
+    private float _vectorXLeft = -1f;
 
     private void OnEnable()
     {
@@ -68,7 +68,7 @@ public class Zombe : MonoBehaviour
             }
             else if (_patroller.GetTargetStart().position.x > transform.position.x)
             {
-                _vectorX = vectorXRight;
+                _vectorX = _vectorXRight;
             }
 
             _animationZombeSwitch.OffPlayerRun();
@@ -82,16 +82,16 @@ public class Zombe : MonoBehaviour
             if (_targetPursuit.position.x < transform.position.x)
             {
                 _rotator.RightRotation();
-                OnMove(_targetPursuit, vectorXLeft, true);
+                OnMove(_targetPursuit, _vectorXLeft, true);
             }
             else if (_targetPursuit.position.x > transform.position.x)
             {
                 _rotator.LeftRotation();
-                OnMove(_targetPursuit, vectorXRight, true);
+                OnMove(_targetPursuit, _vectorXRight, true);
             }
         }
 
-        if (_vectorX == vectorXLeft && _isPatrol)
+        if (_vectorX == _vectorXLeft && _isPatrol)
         {
             _rotator.RightRotation();
 
@@ -103,7 +103,7 @@ public class Zombe : MonoBehaviour
 
             OnMove(_patroller.GetTargetStart(), _vectorX);
         }
-        else if (_vectorX == vectorXRight && _isPatrol)
+        else if (_vectorX == _vectorXRight && _isPatrol)
         {
             _rotator.LeftRotation();
 
