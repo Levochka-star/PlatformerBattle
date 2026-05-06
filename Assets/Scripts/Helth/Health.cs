@@ -7,6 +7,8 @@ public class Health : MonoBehaviour, IHealable, IDamageble
     [Tooltip("If the value is not changed, the maximum health points will be assigned the value of the current health points.")]
     [SerializeField] private float _maxHealth = 0;
     [SerializeField] private HealthBar _healthBar;
+    [SerializeField] private HealthTextBar _healthTextBar;
+    [SerializeField] private SmoothHealthBar _smoothHealthBar;
 
     public bool CanHealling => _canHealling;
 
@@ -21,12 +23,13 @@ public class Health : MonoBehaviour, IHealable, IDamageble
     }
     private void Start()
     {
-        TryDie();
-    }
+        _healthBar.SetHealthPoint(_currentHealth, _minHealth, _maxHealth);
 
-    private void Update()
-    {
-        _healthBar.SetHealthPoint(_currentHealth, _maxHealth);
+        _healthTextBar?.SetHealthPoint(_currentHealth, _minHealth, _maxHealth);
+
+        _smoothHealthBar?.SetHealthPoint(_currentHealth, _maxHealth);
+
+        TryDie();
     }
 
     public void Heal(float amout)
@@ -82,6 +85,12 @@ public class Health : MonoBehaviour, IHealable, IDamageble
                 _currentHealth = _maxHealth;
             }
         }
+
+        _healthBar.SetHealthPoint(_currentHealth, _minHealth, _maxHealth);
+
+        _healthTextBar?.SetHealthPoint(_currentHealth, _minHealth, _maxHealth);
+
+        _smoothHealthBar?.SetHealthPoint(_currentHealth, _maxHealth);
     }
 
     private void TryDie()

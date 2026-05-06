@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -5,12 +6,23 @@ namespace Assets.Scripts
     public class SpawnerHealer : Spawner<Healer>
     {
         [SerializeField] private Transform _pointsTarget;
+        [SerializeField] private int _spawnDelay = 10;
 
         private Healer _healer;
 
+        private Coroutine _waitSpawn;
+
         private void Start()
         {
-            Work();
+            StartRespawn();
+        }
+
+        private void StartRespawn()
+        {
+            if (_waitSpawn == null)
+            {
+                _waitSpawn = StartCoroutine(WaitingRespawn(_spawnDelay));
+            }
         }
 
         private void Work()
@@ -25,7 +37,7 @@ namespace Assets.Scripts
         {
             _healer.Destroed -= OnDestroed;
 
-            Work();
+            StartRespawn();
         }
 
         private Vector2 GenerateRandomPoint()
@@ -35,6 +47,16 @@ namespace Assets.Scripts
             Vector2 nextPoint = _pointsTarget.GetChild(randomChild).position;
 
             return nextPoint;
+        }
+
+        private IEnumerator WaitingRespawn (int  delay)
+        {
+            yield return new WaitForSeconds(delay);
+
+            Work();
+            StopCoroutine(_waitSpawn);
+
+            _waitSpawn = null;
         }
     }
 }

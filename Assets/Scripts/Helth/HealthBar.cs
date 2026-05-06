@@ -1,27 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Image))]
+[RequireComponent(typeof(Slider))]
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Canvas _parentCanvas;
-
-    private Image _healthBar;
-
-    private float _minHealthPoint = 0f;
+    private Slider _healthSlider;
 
     private void Awake()
     {
-        _healthBar = GetComponent<Image>();
+        _healthSlider = GetComponent<Slider>();
     }
 
-    public void SetHealthPoint(float healthPoint, float maxHealt)
+    public void SetHealthPoint(float healthPoint, float minHealt, float maxHealt)
     {
-        _healthBar.fillAmount = healthPoint/maxHealt;
+        _healthSlider.value = healthPoint / maxHealt;
 
-        if(_healthBar.fillAmount == _minHealthPoint)
+        if (_healthSlider.value == minHealt)
         {
-            _parentCanvas.gameObject.SetActive(false);
+            _healthSlider.gameObject.SetActive(false);
         }
     }
 }

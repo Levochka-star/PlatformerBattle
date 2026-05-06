@@ -34,6 +34,8 @@ namespace Assets.Scripts
 
             obj.transform.rotation = Quaternion.identity;
 
+            obj.transform.position = new Vector3(1000, 0, 0);
+
             _poll.Release(obj);
         }
 
