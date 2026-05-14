@@ -22128,7 +22128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &168456309
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22701,8 +22701,8 @@ GameObject:
   m_Component:
   - component: {fileID: 296422583}
   - component: {fileID: 296422586}
-  - component: {fileID: 296422585}
   - component: {fileID: 296422584}
+  - component: {fileID: 296422587}
   m_Layer: 5
   m_Name: 'SmoothHealthBarPlayer '
   m_TagString: Untagged
@@ -22739,19 +22739,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 296422582}
   m_CullTransparentMesh: 1
---- !u!114 &296422585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 296422582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c71840035d561443a33f7e18b85661e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxDeltaSpeed: 0.3
 --- !u!114 &296422586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22799,10 +22786,25 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &296422587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296422582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90bcc58aefa07dc4fa31bea8dfa9c433, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 1032610118}
+  _maxDeltaSpeed: 0.3
+  _smoothSlider: {fileID: 296422586}
 --- !u!1 &451341486
 GameObject:
   m_ObjectHideFlags: 0
@@ -25415,9 +25417,6 @@ MonoBehaviour:
   _canHealling: 1
   _currentHealth: 100
   _maxHealth: 0
-  _healthBar: {fileID: 1247535724}
-  _healthTextBar: {fileID: 1751486892}
-  _smoothHealthBar: {fileID: 296422585}
 --- !u!68 &1032610119
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -25561,7 +25560,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1078777047
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26185,7 +26184,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -26198,9 +26197,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1164870373}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a1d78098f3a24d40a4eeab942012ca8, type: 3}
+  m_Script: {fileID: 11500000, guid: 90bcc58aefa07dc4fa31bea8dfa9c433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _health: {fileID: 1206895649}
+  _maxDeltaSpeed: 0.3
+  _smoothSlider: {fileID: 1164870379}
 --- !u!1 &1206895636 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 184956, guid: caa303d14056c754a8ed80f3930a7d02, type: 3}
@@ -26399,9 +26401,6 @@ MonoBehaviour:
   _canHealling: 0
   _currentHealth: 50
   _maxHealth: 0
-  _healthBar: {fileID: 1164870380}
-  _healthTextBar: {fileID: 0}
-  _smoothHealthBar: {fileID: 0}
 --- !u!1 &1245063445
 GameObject:
   m_ObjectHideFlags: 0
@@ -27375,7 +27374,7 @@ GameObject:
   - component: {fileID: 1247535722}
   - component: {fileID: 1247535723}
   - component: {fileID: 1247535726}
-  - component: {fileID: 1247535724}
+  - component: {fileID: 1247535727}
   m_Layer: 5
   m_Name: HealthBarPlayer
   m_TagString: Untagged
@@ -27451,22 +27450,10 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1247535724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1247535721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a1d78098f3a24d40a4eeab942012ca8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!222 &1247535726
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -27475,6 +27462,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1247535721}
   m_CullTransparentMesh: 1
+--- !u!114 &1247535727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247535721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b31eab2878212364abbce3a1f91a6d2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 1032610118}
+  _slider: {fileID: 1247535723}
 --- !u!1 &1341243431
 GameObject:
   m_ObjectHideFlags: 0
@@ -28443,9 +28444,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1751486888}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f90ea384af006184b961930c4486fa6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 06c02f69cbae92849a6778002127306c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _health: {fileID: 1032610118}
+  _textMeshPro: {fileID: 1751486890}
 --- !u!1 &1776038713
 GameObject:
   m_ObjectHideFlags: 0

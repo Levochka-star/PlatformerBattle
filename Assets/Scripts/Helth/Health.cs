@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour, IHealable, IDamageble
@@ -6,11 +7,12 @@ public class Health : MonoBehaviour, IHealable, IDamageble
     [SerializeField] private float _currentHealth = 100;
     [Tooltip("If the value is not changed, the maximum health points will be assigned the value of the current health points.")]
     [SerializeField] private float _maxHealth = 0;
-    [SerializeField] private HealthBar _healthBar;
-    [SerializeField] private HealthTextBar _healthTextBar;
-    [SerializeField] private SmoothHealthBar _smoothHealthBar;
+
+    public event Action<float> ChangedHealthPoint;
 
     public bool CanHealling => _canHealling;
+
+    public float MaxHealth => _maxHealth;
 
     private float _minHealth = 0;
 
@@ -23,13 +25,7 @@ public class Health : MonoBehaviour, IHealable, IDamageble
     }
     private void Start()
     {
-        _healthBar.SetHealthPoint(_currentHealth, _minHealth, _maxHealth);
-
-        _healthTextBar?.SetHealthPoint(_currentHealth, _minHealth, _maxHealth);
-
-        _smoothHealthBar?.SetHealthPoint(_currentHealth, _maxHealth);
-
-        TryDie();
+        ChangedHealthPoint?.Invoke(_currentHealth);
     }
 
     public void Heal(float amout)
@@ -46,8 +42,6 @@ public class Health : MonoBehaviour, IHealable, IDamageble
     public void TakeDamage(float amout)
     {
         ApplyHeal(amout, true);
-
-        TryDie();
     }
 
     private void ApplyHeal(float amout, bool isDamage = false)
@@ -86,18 +80,6 @@ public class Health : MonoBehaviour, IHealable, IDamageble
             }
         }
 
-        _healthBar.SetHealthPoint(_currentHealth, _minHealth, _maxHealth);
-
-        _healthTextBar?.SetHealthPoint(_currentHealth, _minHealth, _maxHealth);
-
-        _smoothHealthBar?.SetHealthPoint(_currentHealth, _maxHealth);
-    }
-
-    private void TryDie()
-    {
-        if (_currentHealth <= _minHealth)
-        {
-            Destroy(gameObject);
-        }
+        ChangedHealthPoint?.Invoke(_currentHealth);
     }
 }
