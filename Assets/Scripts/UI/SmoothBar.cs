@@ -30,7 +30,7 @@ public class SmoothBar : BaseHealthBar
         _waitingMoveToward = StartCoroutine(WaitMoveToward(fillPoint));
     }
 
-    protected override void SetFillBar(float current)
+    protected override void HealthView(float current)
     {
         StartMoveSlider(current / _maxFillPoint);
     }

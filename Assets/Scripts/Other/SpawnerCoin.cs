@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -17,13 +18,11 @@ namespace Assets.Scripts
         {
             _coin = Spawn();
             _coin.transform.position = GenerateRandomPoint();
-
-            _coin.Destroed += OnDestroed;
         }
 
-        private void OnDestroed()
+        protected override void ReturnToPool(Coin obj)
         {
-            _coin.Destroed -= OnDestroed;
+            base.ReturnToPool(obj);
 
             Work();
         }

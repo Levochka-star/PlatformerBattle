@@ -7,7 +7,7 @@ public class TextBar : BaseHealthBar
 {
     [SerializeField] private TextMeshProUGUI _textMeshPro;
 
-    protected override void SetFillBar(float current)
+    protected override void HealthView(float current)
     {
         if (_textMeshPro != null)
             _textMeshPro.text = ($"{current}/{_maxFillPoint}");

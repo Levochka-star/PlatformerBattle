@@ -5,7 +5,7 @@ public class Bar : BaseHealthBar
 {
     [SerializeField] private Slider _slider;
 
-    protected override void SetFillBar(float current)
+    protected override void HealthView(float current)
     {
         _currentFillPercent = current / _maxFillPoint;
 

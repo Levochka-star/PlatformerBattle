@@ -22726,10 +22726,10 @@ RectTransform:
   - {fileID: 911552122}
   m_Father: {fileID: 214120701}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 384.51, y: 303}
-  m_SizeDelta: {x: 1099.09, y: 75.87}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -604, y: -98}
+  m_SizeDelta: {x: 1099.0898, y: 75.869995}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &296422584
 CanvasRenderer:
@@ -24615,7 +24615,7 @@ RectTransform:
   m_Father: {fileID: 287680570}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -25140,6 +25140,7 @@ GameObject:
   - component: {fileID: 1032610108}
   - component: {fileID: 1032610109}
   - component: {fileID: 1032610118}
+  - component: {fileID: 1032610119}
   - component: {fileID: 1032610117}
   - component: {fileID: 1032610110}
   - component: {fileID: 1032610111}
@@ -25147,8 +25148,6 @@ GameObject:
   - component: {fileID: 1032610115}
   - component: {fileID: 1032610114}
   - component: {fileID: 1032610116}
-  - component: {fileID: 1032610120}
-  - component: {fileID: 1032610119}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -25414,102 +25413,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b57afddd9edc61e47934fb3a957deaea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canHealling: 1
   _currentHealth: 100
   _maxHealth: 0
---- !u!68 &1032610119
-EdgeCollider2D:
+--- !u!114 &1032610119
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1032610103}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.09680291, y: -0.06819716}
-  - {x: -0.09372637, y: -0.09140872}
-  - {x: -0.0722501, y: -0.11422629}
-  - {x: -0.011986727, y: -0.15126471}
-  - {x: 0.052471254, y: -0.11121011}
-  - {x: 0.06510874, y: -0.090323806}
-  - {x: 0.07549125, y: -0.06251404}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
---- !u!68 &1032610120
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1032610103}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.100105464, y: -0.033997968}
-  - {x: -0.094927505, y: 0.0006065457}
-  - {x: -0.08505691, y: 0.016002849}
-  - {x: -0.067140654, y: 0.042298093}
-  - {x: -0.013383449, y: 0.084746405}
-  - {x: 0.04884403, y: 0.028395282}
-  - {x: 0.07078473, y: -0.0061445534}
-  - {x: 0.07052906, y: -0.033176493}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acaf247c2c102b84f9a5b247bf41bf6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1044968502
 GameObject:
   m_ObjectHideFlags: 0
@@ -26398,7 +26315,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b57afddd9edc61e47934fb3a957deaea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canHealling: 0
   _currentHealth: 50
   _maxHealth: 0
 --- !u!1 &1245063445
@@ -27381,7 +27297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1247535722
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28318,7 +28234,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1751486889
 RectTransform:
   m_ObjectHideFlags: 0

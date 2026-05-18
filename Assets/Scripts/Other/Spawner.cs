@@ -28,7 +28,7 @@ namespace Assets.Scripts
             obj.ReadyToDestroy += ReturnToPool;
         }
 
-        private void ReturnToPool(T obj)
+        protected virtual void ReturnToPool(T obj)
         {
             obj.ReadyToDestroy -= ReturnToPool;
 

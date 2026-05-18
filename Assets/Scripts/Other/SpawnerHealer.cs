@@ -29,13 +29,11 @@ namespace Assets.Scripts
         {
             _healer = Spawn();
             _healer.transform.position = GenerateRandomPoint();
-
-            _healer.Destroed += OnDestroed;
         }
 
-        private void OnDestroed()
+        protected override void ReturnToPool(Healer obj)
         {
-            _healer.Destroed -= OnDestroed;
+            base.ReturnToPool(obj);
 
             StartRespawn();
         }

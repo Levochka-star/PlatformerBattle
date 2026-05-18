@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
 
     private void OnMove(float vectorX)
     {
-        OnAnimation(_isRun, vectorX);
+        ChangeHorizontalAnimation(_isRun, vectorX);
 
         _rotator.Rotation(vectorX);
         _mover.Move(_isRun, vectorX, _groundDetector.IsGrounded());
@@ -53,13 +53,13 @@ public class Player : MonoBehaviour
         if (_groundDetector.IsGrounded())
         {
             bool isJump = true;
-            OnAnimation(isJump);
+            ChangeVerticalAnimation(isJump);
 
             _jumper.Jump();
         }
     }
 
-    private void OnAnimation(bool isRun, float vectorX)
+    private void ChangeHorizontalAnimation(bool isRun, float vectorX)
     {
         vectorX = Mathf.Abs(vectorX);
 
@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnAnimation(bool isJump)
+    private void ChangeVerticalAnimation(bool isJump)
     {
         if (isJump)
         {

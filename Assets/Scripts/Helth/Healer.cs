@@ -5,22 +5,15 @@ namespace Assets.Scripts
 {
     public class Healer : MonoBehaviour, IPoolable<Healer>
     {
-        [SerializeField] private float _heal = 30f;
+        [SerializeField] private float _healPoint = 30f;
+
+        public float HealPoint => _healPoint;
 
         public event Action<Healer> ReadyToDestroy;
 
-        public event Action Destroed;
-
-        private void OnTriggerEnter2D(Collider2D collision)
+        public void Destroy()
         {
-            if (collision.TryGetComponent(out IHealable helable) && helable.TryHealling())
-            {
-                helable.Heal(_heal);
-
-                Destroed?.Invoke();
-
-                ReadyToDestroy?.Invoke(this);
-            }
+            ReadyToDestroy?.Invoke(this);
         }
     }
 }
