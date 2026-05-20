@@ -3,46 +3,57 @@ using UnityEngine;
 
 public class Health : MonoBehaviour, IHealable, IDamageble
 {
-    [SerializeField] private float _currentHealth = 100;
+    [SerializeField] private float _currentValue = 100f;
     [Tooltip("If the value is not changed, the maximum health points will be assigned the value of the current health points.")]
-    [SerializeField] private float _maxHealth = 0;
+    [SerializeField] private float _maxValue = 0f;
 
     public event Action<float> ChangedHealthPoint;
 
-    public float MaxHealth => _maxHealth;
+    public float MaxValue => _maxValue;
 
-    private float _minHealth = 0;
+    private float _minHealth = 0f;
 
     private void Awake()
     {
-        if (_maxHealth <= 0)
+        if (_maxValue <= 0)
         {
-            _maxHealth = _currentHealth;
+            _maxValue = _currentValue;
         }
     }
     private void Start()
     {
-        ChangedHealthPoint?.Invoke(_currentHealth);
+        ChangedHealthPoint?.Invoke(_currentValue);
     }
-   
+
+    private void Update()
+    {
+        TryDead();
+    }
+
     public void Heal(float amout)
     {
         if (amout >= 0)
-            _currentHealth = Mathf.Clamp(_currentHealth + amout, _minHealth, _maxHealth);
+            _currentValue = Mathf.Clamp(_currentValue + amout, _minHealth, _maxValue);
 
-        ChangedHealthPoint?.Invoke(_currentHealth);
+        ChangedHealthPoint?.Invoke(_currentValue);
     }
 
     public bool NeedsHealing()
     {
-        return _currentHealth < _maxHealth;
+        return _currentValue < _maxValue;
     }
 
     public void TakeDamage(float amout)
     {
         if (amout >= 0)
-            _currentHealth = Mathf.Clamp(_currentHealth - amout, _minHealth, _maxHealth);
+            _currentValue = Mathf.Clamp(_currentValue - amout, _minHealth, _maxValue);
 
-        ChangedHealthPoint?.Invoke(_currentHealth);
+        ChangedHealthPoint?.Invoke(_currentValue);
+    }
+
+    private void TryDead()
+    {
+        if (_currentValue == _minHealth)
+            gameObject.SetActive(false);
     }
 }

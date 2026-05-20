@@ -7,10 +7,12 @@ public class InputReader : MonoBehaviour
     [SerializeField] private KeyCode _keyLeft = KeyCode.A;
     [SerializeField] private KeyCode _keyRun = KeyCode.LeftShift;
     [SerializeField] private KeyCode _keyJump = KeyCode.Space;
+    [SerializeField] private KeyCode _keyVampirAbility = KeyCode.V;
 
     public event Action<float> HorizontalMovementStarted;
     public event Action<bool> HorizontalIsRunStarted;
     public event Action VertiсalMovementStarted;
+    public event Action ChangedVampirAbility;
 
     private float _moveRight = 1f;
     private float _moveLeft = -1f;
@@ -50,6 +52,11 @@ public class InputReader : MonoBehaviour
         if (Input.GetKey(_keyJump) )
         {
             VertiсalMovementStarted?.Invoke();
+        }
+
+        if(Input.GetKeyDown(_keyVampirAbility))
+        {
+            ChangedVampirAbility?.Invoke();
         }
     }
 }

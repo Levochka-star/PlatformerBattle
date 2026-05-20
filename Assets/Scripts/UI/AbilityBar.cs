@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SmoothBar : BaseBar
+public class AbilityBar : MonoBehaviour
 {
     [SerializeField] private float _maxDeltaSpeed = 0.3f;
 
@@ -19,14 +19,6 @@ public class SmoothBar : BaseBar
         }
     }
 
-    private void Update()
-    {
-        if(_smoothSlider.value <= 0)
-        {
-            gameObject.SetActive(false);
-        }
-    }
-
     private void StartMoveSlider(float fillPoint)
     {
         if (_waitingMoveToward != null)
@@ -38,9 +30,9 @@ public class SmoothBar : BaseBar
         _waitingMoveToward = StartCoroutine(WaitMoveToward(fillPoint));
     }
 
-    protected override void UpdateValue(float current)
+    public void UpdateValue(float current, float maxPoint)
     {
-        StartMoveSlider(current / _maxFillPoint);
+        StartMoveSlider(current / maxPoint);
     }
 
     private IEnumerator WaitMoveToward(float fillPoint)

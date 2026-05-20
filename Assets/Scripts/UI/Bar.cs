@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Bar : BaseHealthBar
+public class Bar : BaseBar
 {
     [SerializeField] private Slider _slider;
 
-    protected override void HealthView(float current)
+    protected override void UpdateValue(float current)
     {
         _currentFillPercent = current / _maxFillPoint;
 
