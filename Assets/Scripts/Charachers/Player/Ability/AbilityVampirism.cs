@@ -9,7 +9,7 @@ public class AbilityVampirism : MonoBehaviour
     [SerializeField] private float _workingTime = 6f;
     [SerializeField] private float _rechargeTime = 4f;
 
-    [SerializeField] ZoneAttack _zoneAttack;
+    [SerializeField] EnemyDetector _zoneAttack;
 
     private Health _health;
     private Coroutine _countdown;

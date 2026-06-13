@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZoneAttack : MonoBehaviour
+public class EnemyDetector : MonoBehaviour
 {
     private List<Enemy> _enemies = new List<Enemy>();
 

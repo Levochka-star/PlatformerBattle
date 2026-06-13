@@ -9,7 +9,6 @@ public class ObstacleDetector : MonoBehaviour
     {
         if (collision.GetComponent<Ground>())
         {
-            Debug.Log("сработало обнаружение земли");
             OnStucked?.Invoke();
         }
     }
