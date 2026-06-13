@@ -1,8 +1,9 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SmoothBar : BaseBar
+public class SmoothBar : HealthView
 {
     [SerializeField] private float _maxDeltaSpeed = 0.3f;
 
@@ -16,14 +17,6 @@ public class SmoothBar : BaseBar
         {
             StopCoroutine(_waitingMoveToward);
             _waitingMoveToward = null;
-        }
-    }
-
-    private void Update()
-    {
-        if(_smoothSlider.value <= 0)
-        {
-            gameObject.SetActive(false);
         }
     }
 

@@ -13,7 +13,7 @@ public class ItemReceiver : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Healer healer)&& _health.NeedsHealing())
+        if (collision.TryGetComponent(out Healer healer)&& _health.IsFull)
         {
             _health.Heal(healer.HealPoint);
 

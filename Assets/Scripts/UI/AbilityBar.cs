@@ -4,46 +4,60 @@ using UnityEngine.UI;
 
 public class AbilityBar : MonoBehaviour
 {
-    [SerializeField] private float _maxDeltaSpeed = 0.3f;
-
     [SerializeField] private Slider _smoothSlider;
+    [SerializeField] private AbilityVampirism _vampirism;
 
     private Coroutine _waitingMoveToward;
 
+    private void Awake()
+    {
+        _vampirism.ChangedFillPoint += UpdateValue;
+    }
+
     private void OnDisable()
     {
-        if (_waitingMoveToward != null)
-        {
-            StopCoroutine(_waitingMoveToward);
-            _waitingMoveToward = null;
-        }
+        _vampirism.ChangedFillPoint -= UpdateValue;
+        StopCorountine(_waitingMoveToward);
+    }
+
+    public void UpdateValue(float value)
+    {
+        StartMoveSlider(value);
     }
 
     private void StartMoveSlider(float fillPoint)
     {
-        if (_waitingMoveToward != null)
-        {
-            StopCoroutine(_waitingMoveToward);
-            _waitingMoveToward = null;
-        }
+        StopCorountine(_waitingMoveToward);
 
         _waitingMoveToward = StartCoroutine(WaitMoveToward(fillPoint));
     }
 
-    public void UpdateValue(float current, float maxPoint)
+    private void StopCorountine(Coroutine coroutine)
     {
-        StartMoveSlider(current / maxPoint);
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
     }
 
-    private IEnumerator WaitMoveToward(float fillPoint)
+    private IEnumerator WaitMoveToward(float fillPersent)
     {
-        float deltaSpeed = _maxDeltaSpeed * Time.deltaTime;
+        float currentValue = _smoothSlider.value;
+        float slowdownTravel = 0.8f;
+        float timer = 0f;
 
-        while (!Mathf.Approximately(_smoothSlider.value, fillPoint))
+        while (timer<slowdownTravel)
         {
-            _smoothSlider.value = Mathf.MoveTowards(_smoothSlider.value, fillPoint, deltaSpeed);
+            timer += Time.deltaTime;
+            float progress = timer / slowdownTravel;
+
+            _smoothSlider.value = Mathf.Lerp(currentValue, fillPersent, progress);
 
             yield return null;
         }
+
+        _smoothSlider.value = fillPersent;
+        StopCorountine(_waitingMoveToward);
     }
 }

@@ -13,19 +13,20 @@ public class Damager : MonoBehaviour
     {
         float second = 1f;
 
-        _delayHit = second/_hitForSecond;
+        _delayHit = second / _hitForSecond;
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    public void Attack(IDamageble damageble)
     {
-        if (collision.gameObject.TryGetComponent(out IDamageble damageble))
-        {
-            if (_waitReload == null)
-            {
-                damageble.TakeDamage(_damageForHit);
-                StartWaitDamage();
-            }
-        }
+        damageble.TakeDamage(_damageForHit);
+
+        if (gameObject.activeInHierarchy)
+            StartWaitDamage();
+    }
+
+    private void OnDestroy()
+    {
+        StopWaitDamage();
     }
 
     private void StartWaitDamage()

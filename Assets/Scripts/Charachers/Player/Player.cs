@@ -1,19 +1,13 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Mover))]
-[RequireComponent(typeof(Jumper))]
-[RequireComponent(typeof(Rotator))]
-[RequireComponent(typeof(GroundDetector))]
 [RequireComponent(typeof(AnimationPlayerSwitch))]
-public class Player : MonoBehaviour
+[RequireComponent(typeof(AbilityVampirism))]
+public class Player : Characher
 {
     [SerializeField] private InputReader _inputReader;
     
-    private Mover _mover;
-    private Jumper _jumper;
-    private Rotator _rotator;
-    private GroundDetector _groundDetector;
     private AnimationPlayerSwitch _animationSwitch;
+    private AbilityVampirism _abilityVampirism;
 
     private bool _isRun;
 
@@ -24,6 +18,9 @@ public class Player : MonoBehaviour
         _rotator = GetComponent<Rotator>();
         _groundDetector = GetComponent<GroundDetector>();
         _animationSwitch = GetComponent<AnimationPlayerSwitch>();
+        _abilityVampirism = GetComponent<AbilityVampirism>();
+        _charaterDetector = GetComponent<CharacherDetector>();
+        _damager = GetComponent<Damager>();
     }
 
     private void OnEnable()
@@ -31,6 +28,8 @@ public class Player : MonoBehaviour
         _inputReader.HorizontalIsRunStarted += SetRun;
         _inputReader.HorizontalMovementStarted += OnMove;
         _inputReader.VertiсalMovementStarted += OnJump;
+        _inputReader.ChangedVampirAbility += ToggleVampirism;
+        _charaterDetector.CollisionDetected += TryAttack;
     }
 
     private void OnDisable()
@@ -38,6 +37,8 @@ public class Player : MonoBehaviour
         _inputReader.HorizontalIsRunStarted -= SetRun;
         _inputReader.HorizontalMovementStarted -= OnMove;
         _inputReader.VertiсalMovementStarted -= OnJump;
+        _inputReader.ChangedVampirAbility -= ToggleVampirism;
+        _charaterDetector.CollisionDetected -= TryAttack;
     }
 
     private void OnMove(float vectorX)
@@ -48,14 +49,14 @@ public class Player : MonoBehaviour
         _mover.Move(_isRun, vectorX, _groundDetector.IsGrounded());
     }
 
-    private void OnJump()
+    protected override void OnJump()
     {
         if (_groundDetector.IsGrounded())
         {
             bool isJump = true;
             ChangeVerticalAnimation(isJump);
 
-            _jumper.Jump();
+            base.OnJump();
         }
     }
 
@@ -90,5 +91,18 @@ public class Player : MonoBehaviour
     private void SetRun(bool isRun)
     {
         _isRun = isRun;
+    }
+
+    private void ToggleVampirism()
+    {
+        _abilityVampirism.Work();
+    }
+
+    protected override void TryAttack(Collision2D collision)
+    {
+        if(!collision.gameObject.TryGetComponent(out Player player)&& collision.gameObject.TryGetComponent(out IDamageble damageble))
+        {
+            _damager.Attack(damageble);
+        }
     }
 }

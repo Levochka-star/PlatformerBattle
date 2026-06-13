@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Health : MonoBehaviour, IHealable, IDamageble
 {
@@ -10,6 +11,8 @@ public class Health : MonoBehaviour, IHealable, IDamageble
     public event Action<float> ChangedHealthPoint;
 
     public float MaxValue => _maxValue;
+
+    public bool IsFull => _currentValue < _maxValue;
 
     private float _minHealth = 0f;
 
@@ -25,30 +28,26 @@ public class Health : MonoBehaviour, IHealable, IDamageble
         ChangedHealthPoint?.Invoke(_currentValue);
     }
 
-    private void Update()
-    {
-        TryDead();
-    }
-
     public void Heal(float amout)
     {
-        if (amout >= 0)
-            _currentValue = Mathf.Clamp(_currentValue + amout, _minHealth, _maxValue);
+        if (amout <= 0)
+            return;
+
+        _currentValue = Mathf.Clamp(_currentValue + amout, _minHealth, _maxValue);
 
         ChangedHealthPoint?.Invoke(_currentValue);
-    }
-
-    public bool NeedsHealing()
-    {
-        return _currentValue < _maxValue;
     }
 
     public void TakeDamage(float amout)
     {
-        if (amout >= 0)
-            _currentValue = Mathf.Clamp(_currentValue - amout, _minHealth, _maxValue);
+        if (amout <= 0)
+            return;
+
+        _currentValue = Mathf.Clamp(_currentValue - amout, _minHealth, _maxValue);
 
         ChangedHealthPoint?.Invoke(_currentValue);
+
+        TryDead();
     }
 
     private void TryDead()

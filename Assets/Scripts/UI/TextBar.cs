@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TextBar : BaseBar
+public class TextBar : HealthView
 {
     [SerializeField] private TextMeshProUGUI _textMeshPro;
 

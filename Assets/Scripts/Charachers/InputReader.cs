@@ -7,7 +7,7 @@ public class InputReader : MonoBehaviour
     [SerializeField] private KeyCode _keyLeft = KeyCode.A;
     [SerializeField] private KeyCode _keyRun = KeyCode.LeftShift;
     [SerializeField] private KeyCode _keyJump = KeyCode.Space;
-    [SerializeField] private KeyCode _keyVampirAbility = KeyCode.V;
+    [SerializeField] private KeyCode _keyAbilityVampirism = KeyCode.V;
 
     public event Action<float> HorizontalMovementStarted;
     public event Action<bool> HorizontalIsRunStarted;
@@ -23,6 +23,11 @@ public class InputReader : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetKeyDown(_keyAbilityVampirism))
+        {
+            ChangedVampirAbility?.Invoke();
+        }
+
         if (Input.GetKey(_keyRun) && Input.GetKey(_keyRight))
         {
             HorizontalIsRunStarted?.Invoke(_isRun);
@@ -52,11 +57,6 @@ public class InputReader : MonoBehaviour
         if (Input.GetKey(_keyJump) )
         {
             VertiсalMovementStarted?.Invoke();
-        }
-
-        if(Input.GetKeyDown(_keyVampirAbility))
-        {
-            ChangedVampirAbility?.Invoke();
         }
     }
 }

@@ -8,6 +8,9 @@ public class ObstacleDetector : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.GetComponent<Ground>())
+        {
+            Debug.Log("сработало обнаружение земли");
             OnStucked?.Invoke();
+        }
     }
 }

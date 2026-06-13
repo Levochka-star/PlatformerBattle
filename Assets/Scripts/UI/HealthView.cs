@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class BaseBar : MonoBehaviour
+public abstract class HealthView : MonoBehaviour
 {
     [SerializeField] protected Health _health;
 
@@ -12,13 +12,23 @@ public abstract class BaseBar : MonoBehaviour
     {
         if (_health != null)
             _health.ChangedHealthPoint += UpdateValue;
+            _health.ChangedHealthPoint += TryDisableVisability;
     }
 
     private void OnDestroy()
     {
         if (_health != null)
             _health.ChangedHealthPoint -= UpdateValue;
+            _health.ChangedHealthPoint -= TryDisableVisability;
     }
 
     protected abstract void UpdateValue(float current);
+
+    private void TryDisableVisability(float current)
+    {
+        if (current <= 0)
+        {
+            gameObject.SetActive(false);
+        }
+    }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Bar : BaseBar
+public class Bar : HealthView
 {
     [SerializeField] private Slider _slider;
 

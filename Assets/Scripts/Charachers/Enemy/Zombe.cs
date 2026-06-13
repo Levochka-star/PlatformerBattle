@@ -1,22 +1,14 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Mover))]
-[RequireComponent(typeof(Jumper))]
-[RequireComponent(typeof(Rotator))]
 [RequireComponent(typeof(Patroller))]
-[RequireComponent(typeof(GroundDetector))]
 [RequireComponent(typeof(AnimationZombeSwitch))]
-public class Zombe : MonoBehaviour
+public class Zombe : Enemy
 {
     [SerializeField] private PursuitZone _pursuitZone;
     [SerializeField] private DetectionArea _detectionArea;
     [SerializeField] private ObstacleDetector _obstacleDetector;
 
-    private Mover _mover;
-    private Jumper _jumper;
-    private Rotator _rotator;
     private Patroller _patroller;
-    private GroundDetector _groundDetector;
     private AnimationZombeSwitch _animationZombeSwitch;
 
     private Transform _targetPursuit;
@@ -27,22 +19,6 @@ public class Zombe : MonoBehaviour
     private float _vectorXRight = 1f;
     private float _vectorXLeft = -1f;
 
-    private void OnEnable()
-    {
-        _pursuitZone.ZombePursiting += SetStalkStatus;
-        _pursuitZone.PositionChanged += SetTargetPursuit;
-        _detectionArea.PlayerDetected += SetHauntStatus;
-        _obstacleDetector.OnStucked += OnJump;
-    }
-
-    private void OnDisable()
-    {
-        _pursuitZone.ZombePursiting -= SetStalkStatus;
-        _pursuitZone.PositionChanged -= SetTargetPursuit;
-        _detectionArea.PlayerDetected -= SetHauntStatus;
-        _obstacleDetector.OnStucked -= OnJump;
-    }
-
     private void Awake()
     {
         _mover = GetComponent<Mover>();
@@ -51,6 +27,26 @@ public class Zombe : MonoBehaviour
         _patroller = GetComponent<Patroller>();
         _groundDetector = GetComponent<GroundDetector>();
         _animationZombeSwitch = GetComponent<AnimationZombeSwitch>();
+        _charaterDetector = GetComponent<CharacherDetector>();
+        _damager = GetComponent<Damager>();
+    }
+
+    private void OnEnable()
+    {
+        _pursuitZone.ZombePursiting += SetStalkStatus;
+        _pursuitZone.PositionChanged += SetTargetPursuit;
+        _detectionArea.PlayerDetected += SetHauntStatus;
+        _obstacleDetector.OnStucked += OnJump;
+        _charaterDetector.CollisionDetected += TryAttack;
+    }
+
+    private void OnDisable()
+    {
+        _pursuitZone.ZombePursiting -= SetStalkStatus;
+        _pursuitZone.PositionChanged -= SetTargetPursuit;
+        _detectionArea.PlayerDetected -= SetHauntStatus;
+        _obstacleDetector.OnStucked -= OnJump;
+        _charaterDetector.CollisionDetected -= TryAttack;
     }
 
     private void Start()
@@ -165,8 +161,11 @@ public class Zombe : MonoBehaviour
         _targetPursuit = target;
     }
 
-    private void OnJump()
+    protected override void TryAttack(Collision2D collision)
     {
-        _jumper.Jump();
+        if (!collision.gameObject.TryGetComponent(out Zombe zombe) && collision.gameObject.TryGetComponent(out IDamageble damageble))
+        {
+            _damager.Attack(damageble);
+        }
     }
 }
