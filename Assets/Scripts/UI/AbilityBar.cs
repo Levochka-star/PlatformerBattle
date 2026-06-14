@@ -17,7 +17,9 @@ public class AbilityBar : MonoBehaviour
     private void OnDisable()
     {
         _vampirism.ChangedFillPoint -= UpdateValue;
-        StopCorountine(_waitingMoveToward);
+
+        if (_waitingMoveToward != null)
+            StopCoroutine(_waitingMoveToward);
     }
 
     public void UpdateValue(float value)
@@ -27,18 +29,12 @@ public class AbilityBar : MonoBehaviour
 
     private void StartMoveSlider(float fillPoint)
     {
-        StopCorountine(_waitingMoveToward);
+        if (_waitingMoveToward != null)
+        {
+            StopCoroutine(_waitingMoveToward);
+        }
 
         _waitingMoveToward = StartCoroutine(WaitMoveToward(fillPoint));
-    }
-
-    private void StopCorountine(Coroutine coroutine)
-    {
-        if (coroutine != null)
-        {
-            StopCoroutine(coroutine);
-            coroutine = null;
-        }
     }
 
     private IEnumerator WaitMoveToward(float fillPersent)
@@ -47,7 +43,7 @@ public class AbilityBar : MonoBehaviour
         float slowdownTravel = 0.8f;
         float timer = 0f;
 
-        while (timer<slowdownTravel)
+        while (timer < slowdownTravel)
         {
             timer += Time.deltaTime;
             float progress = timer / slowdownTravel;
@@ -58,6 +54,6 @@ public class AbilityBar : MonoBehaviour
         }
 
         _smoothSlider.value = fillPersent;
-        StopCorountine(_waitingMoveToward);
+        _waitingMoveToward = null;
     }
 }

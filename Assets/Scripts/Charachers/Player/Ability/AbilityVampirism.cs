@@ -12,7 +12,8 @@ public class AbilityVampirism : MonoBehaviour
     [SerializeField] EnemyDetector _zoneAttack;
 
     private Health _health;
-    private Coroutine _countdown;
+    private Coroutine _waitWorking;
+    private Coroutine _waitRecharging;
 
     private bool _isReady;
 
@@ -24,30 +25,44 @@ public class AbilityVampirism : MonoBehaviour
         _isReady = false;
         _health = GetComponent<Health>();
 
-        StartMyCorountine(_countdown, Recharging(_rechargeTime));
+        StartingRecharch();
+    }
+
+    private void OnDisable()
+    {
+        if (_waitWorking != null)
+            StopCoroutine(_waitWorking);
+
+        if (_waitRecharging != null)
+            StopCoroutine(_waitRecharging);
     }
 
     public void Work()
     {
         if (_isReady)
         {
-            StartMyCorountine(_countdown, Working(_workingTime));
+            StartingVampirism();
         }
     }
 
-    private void StartMyCorountine(Coroutine coroutine, IEnumerator enumerator)
+    private void StartingVampirism()
     {
-        StopMyCorountine(coroutine);
-        coroutine = StartCoroutine(enumerator);
-    }
-
-    private void StopMyCorountine(Coroutine coroutine)
-    {
-        if (coroutine != null)
+        if (_waitWorking != null)
         {
-            StopCoroutine(coroutine);
-            coroutine = null;
+            StopCoroutine(_waitWorking);
         }
+      
+        _waitWorking = StartCoroutine(Working(_workingTime));
+    }
+
+    private void StartingRecharch()
+    {
+        if (_waitRecharging != null)
+        {
+            StopCoroutine(_waitRecharging);
+        }
+
+        _waitRecharging = StartCoroutine(Recharging(_rechargeTime));
     }
 
     private IEnumerator Working(float time)
@@ -70,11 +85,12 @@ public class AbilityVampirism : MonoBehaviour
             yield return new WaitForSeconds(1f);
 
             currentTime++;
-            ChangedFillPoint?.Invoke((time-currentTime)/time);
+            ChangedFillPoint?.Invoke((time - currentTime) / time);
         }
 
         AbilityEnabled?.Invoke();
-        StartMyCorountine(_countdown, Recharging(_rechargeTime));
+        StartingRecharch();
+        _waitWorking = null;
     }
 
     private IEnumerator Recharging(float time)
@@ -83,12 +99,13 @@ public class AbilityVampirism : MonoBehaviour
 
         while (currentTime < time)
         {
-           yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1f);
 
             currentTime++;
-            ChangedFillPoint?.Invoke(currentTime/time);
+            ChangedFillPoint?.Invoke(currentTime / time);
         }
 
         _isReady = true;
+        _waitRecharging = null;
     }
 }

@@ -32,15 +32,20 @@ public class EnemyDetector : MonoBehaviour
 
         Enemy nearEnemy = null;
 
-        foreach (Enemy enemy in _enemies)
+        for (int i = 0; i < _enemies.Count; i++)
         {
-            float distans = (enemy.transform.position - transform.position).sqrMagnitude;
+            if (_enemies[i] == null)
+            {
+                continue;
+            }
+
+            float distans = (_enemies[i].transform.position - transform.position).sqrMagnitude;
 
             if (distans < minDistans)
             {
                 minDistans = distans;
 
-                nearEnemy = enemy;
+                nearEnemy = _enemies[i];
             }
         }
 
@@ -49,11 +54,11 @@ public class EnemyDetector : MonoBehaviour
 
     private void ClearDeadEnemy()
     {
-        foreach (Enemy enemy in _enemies)
+        for (int i = _enemies.Count - 1; i >= 0; i--)
         {
-            if(enemy == null)
+            if (_enemies[i] == null)
             {
-                _enemies.Remove(enemy);
+                _enemies.RemoveAt(i);
             }
         }
     }

@@ -13,14 +13,14 @@ public class Player : Characher
 
     private void Awake()
     {
-        _mover = GetComponent<Mover>();
-        _jumper = GetComponent<Jumper>();
-        _rotator = GetComponent<Rotator>();
-        _groundDetector = GetComponent<GroundDetector>();
+        Mover = GetComponent<Mover>();
+        Jumper = GetComponent<Jumper>();
+        Rotator = GetComponent<Rotator>();
+        GroundDetector = GetComponent<GroundDetector>();
         _animationSwitch = GetComponent<AnimationPlayerSwitch>();
         _abilityVampirism = GetComponent<AbilityVampirism>();
-        _charaterDetector = GetComponent<CharacherDetector>();
-        _damager = GetComponent<Damager>();
+        CharaterDetector = GetComponent<CharacherDetector>();
+        Damager = GetComponent<Damager>();
     }
 
     private void OnEnable()
@@ -29,7 +29,7 @@ public class Player : Characher
         _inputReader.HorizontalMovementStarted += OnMove;
         _inputReader.VertiсalMovementStarted += OnJump;
         _inputReader.ChangedVampirAbility += ToggleVampirism;
-        _charaterDetector.CollisionDetected += TryAttack;
+        CharaterDetector.CollisionDetected += TryAttack;
     }
 
     private void OnDisable()
@@ -38,20 +38,20 @@ public class Player : Characher
         _inputReader.HorizontalMovementStarted -= OnMove;
         _inputReader.VertiсalMovementStarted -= OnJump;
         _inputReader.ChangedVampirAbility -= ToggleVampirism;
-        _charaterDetector.CollisionDetected -= TryAttack;
+        CharaterDetector.CollisionDetected -= TryAttack;
     }
 
     private void OnMove(float vectorX)
     {
         ChangeHorizontalAnimation(_isRun, vectorX);
 
-        _rotator.Rotation(vectorX);
-        _mover.Move(_isRun, vectorX, _groundDetector.IsGrounded());
+        Rotator.Rotation(vectorX);
+        Mover.Move(_isRun, vectorX, GroundDetector.IsGrounded());
     }
 
     protected override void OnJump()
     {
-        if (_groundDetector.IsGrounded())
+        if (GroundDetector.IsGrounded())
         {
             bool isJump = true;
             ChangeVerticalAnimation(isJump);
@@ -102,7 +102,7 @@ public class Player : Characher
     {
         if(!collision.gameObject.TryGetComponent(out Player player)&& collision.gameObject.TryGetComponent(out IDamageble damageble))
         {
-            _damager.Attack(damageble);
+            Damager.Attack(damageble);
         }
     }
 }

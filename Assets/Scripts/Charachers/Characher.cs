@@ -8,16 +8,16 @@ using UnityEngine;
 [RequireComponent(typeof(Damager))]
 public class Characher : MonoBehaviour
 {
-    protected Mover _mover;
-    protected Jumper _jumper;
-    protected Rotator _rotator;
-    protected GroundDetector _groundDetector;
-    protected CharacherDetector _charaterDetector;
-    protected Damager _damager;
+    protected Mover Mover;
+    protected Jumper Jumper;
+    protected Rotator Rotator;
+    protected GroundDetector GroundDetector;
+    protected CharacherDetector CharaterDetector;
+    protected Damager Damager;
 
     protected virtual void OnJump()
     {
-        _jumper.Jump();
+        Jumper.Jump();
     }
 
     protected virtual void TryAttack(Collision2D collision) { }

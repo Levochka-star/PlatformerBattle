@@ -21,14 +21,14 @@ public class Zombe : Enemy
 
     private void Awake()
     {
-        _mover = GetComponent<Mover>();
-        _jumper = GetComponent<Jumper>();
-        _rotator = GetComponent<Rotator>();
+        Mover = GetComponent<Mover>();
+        Jumper = GetComponent<Jumper>();
+        Rotator = GetComponent<Rotator>();
         _patroller = GetComponent<Patroller>();
-        _groundDetector = GetComponent<GroundDetector>();
+        GroundDetector = GetComponent<GroundDetector>();
         _animationZombeSwitch = GetComponent<AnimationZombeSwitch>();
-        _charaterDetector = GetComponent<CharacherDetector>();
-        _damager = GetComponent<Damager>();
+        CharaterDetector = GetComponent<CharacherDetector>();
+        Damager = GetComponent<Damager>();
     }
 
     private void OnEnable()
@@ -37,7 +37,7 @@ public class Zombe : Enemy
         _pursuitZone.PositionChanged += SetTargetPursuit;
         _detectionArea.PlayerDetected += SetHauntStatus;
         _obstacleDetector.OnStucked += OnJump;
-        _charaterDetector.CollisionDetected += TryAttack;
+        CharaterDetector.CollisionDetected += TryAttack;
     }
 
     private void OnDisable()
@@ -46,7 +46,7 @@ public class Zombe : Enemy
         _pursuitZone.PositionChanged -= SetTargetPursuit;
         _detectionArea.PlayerDetected -= SetHauntStatus;
         _obstacleDetector.OnStucked -= OnJump;
-        _charaterDetector.CollisionDetected -= TryAttack;
+        CharaterDetector.CollisionDetected -= TryAttack;
     }
 
     private void Start()
@@ -77,23 +77,23 @@ public class Zombe : Enemy
 
             if (_targetPursuit.position.x < transform.position.x)
             {
-                _rotator.RightRotation();
+                Rotator.RightRotation();
                 OnMove(_targetPursuit, _vectorXLeft, true);
             }
             else if (_targetPursuit.position.x > transform.position.x)
             {
-                _rotator.LeftRotation();
+                Rotator.LeftRotation();
                 OnMove(_targetPursuit, _vectorXRight, true);
             }
         }
 
         if (_vectorX == _vectorXLeft && _isPatrol)
         {
-            _rotator.RightRotation();
+            Rotator.RightRotation();
 
             if (TryFinishPath(_patroller.GetTargetStart()))
             {
-                _rotator.LeftRotation();
+                Rotator.LeftRotation();
                 return;
             }
 
@@ -101,11 +101,11 @@ public class Zombe : Enemy
         }
         else if (_vectorX == _vectorXRight && _isPatrol)
         {
-            _rotator.LeftRotation();
+            Rotator.LeftRotation();
 
             if (TryFinishPath(_patroller.GetTargetEnd()))
             {
-                _rotator.RightRotation();
+                Rotator.RightRotation();
                 return;
             }
 
@@ -115,7 +115,7 @@ public class Zombe : Enemy
 
     private void OnMove(Transform target, float vectorX, bool isRun = false)
     {
-        _mover.Move(isRun, vectorX, _groundDetector.IsGrounded());
+        Mover.Move(isRun, vectorX, GroundDetector.IsGrounded());
     }
 
     private bool TryFinishPath(Transform target)
@@ -165,7 +165,7 @@ public class Zombe : Enemy
     {
         if (!collision.gameObject.TryGetComponent(out Zombe zombe) && collision.gameObject.TryGetComponent(out IDamageble damageble))
         {
-            _damager.Attack(damageble);
+            Damager.Attack(damageble);
         }
     }
 }
