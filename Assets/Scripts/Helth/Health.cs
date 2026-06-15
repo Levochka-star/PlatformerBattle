@@ -50,6 +50,22 @@ public class Health : MonoBehaviour, IHealable, IDamageble
         TryDead();
     }
 
+    public float ExtractHealth(float amout)
+    {
+        if (amout <= 0)
+            return 0f;
+
+        float damage = Mathf.Min(amout, _currentValue);
+
+        _currentValue = Mathf.Clamp(_currentValue - damage, _minHealth, _maxValue);
+
+        ChangedHealthPoint?.Invoke(_currentValue);
+
+        TryDead();
+
+        return damage;
+    }
+
     private void TryDead()
     {
         if (_currentValue == _minHealth)

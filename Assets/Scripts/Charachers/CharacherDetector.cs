@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CharacherDetector : MonoBehaviour
 {
-    public Action<Collision2D> CollisionDetected;
+    public event Action<Collision2D> CollisionDetected;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

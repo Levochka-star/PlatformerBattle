@@ -4,7 +4,7 @@ public class SmoothFollow : MonoBehaviour
 {
     [SerializeField] private Transform _target;
     [SerializeField] private Vector3 _ofset = new Vector3(0f, 0f, 0f);
-    [SerializeField] private float _slideSpeed;
+    [SerializeField] private float _slideSpeed = 100f;
 
     private void FixedUpdate()
     {

@@ -9,15 +9,18 @@ public class AbilityVampirism : MonoBehaviour
     [SerializeField] private float _workingTime = 6f;
     [SerializeField] private float _rechargeTime = 4f;
 
-    [SerializeField] EnemyDetector _zoneAttack;
+    [SerializeField] private EnemyDetector _zoneAttack;
 
     private Health _health;
+
     private Coroutine _waitWorking;
     private Coroutine _waitRecharging;
 
+    private WaitForSeconds _waitOneSecond = new WaitForSeconds(1f);
+
     private bool _isReady;
 
-    public event Action AbilityEnabled;
+    public event Action<bool> AbilityEnabled;
     public event Action<float> ChangedFillPoint;
 
     private void Awake()
@@ -70,7 +73,7 @@ public class AbilityVampirism : MonoBehaviour
         _isReady = false;
         float currentTime = 0;
 
-        AbilityEnabled?.Invoke();
+        AbilityEnabled?.Invoke(true);
 
         while (currentTime < time)
         {
@@ -78,17 +81,17 @@ public class AbilityVampirism : MonoBehaviour
 
             if (enemy != null && enemy.TryGetComponent(out Health enemyHealth))
             {
-                enemyHealth.TakeDamage(_pointPerSecond);
-                _health.Heal(_pointPerSecond);
+                float healthValue = enemyHealth.ExtractHealth(_pointPerSecond);
+                _health.Heal(healthValue);
             }
 
-            yield return new WaitForSeconds(1f);
+            yield return _waitOneSecond;
 
             currentTime++;
             ChangedFillPoint?.Invoke((time - currentTime) / time);
         }
 
-        AbilityEnabled?.Invoke();
+        AbilityEnabled?.Invoke(false);
         StartingRecharch();
         _waitWorking = null;
     }
@@ -99,7 +102,7 @@ public class AbilityVampirism : MonoBehaviour
 
         while (currentTime < time)
         {
-            yield return new WaitForSeconds(1f);
+            yield return _waitOneSecond;
 
             currentTime++;
             ChangedFillPoint?.Invoke(currentTime / time);

@@ -3,63 +3,37 @@ using UnityEngine;
 
 public class EnemyDetector : MonoBehaviour
 {
-    private List<Enemy> _enemies = new List<Enemy>();
+    [SerializeField] private float _detectRadius = 3f;  
+    [SerializeField] private LayerMask _enemyLayer;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out Enemy enemy) && !collision.isTrigger)
-        {
-            if (!_enemies.Contains(enemy))
-            {
-                _enemies.Add(enemy);
-            }
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out Enemy enemy))
-        {
-            _enemies.Remove(enemy);
-        }
-    }
+    public float DetectRadius => _detectRadius;
 
     public Enemy GetNearEnemy()
     {
-        ClearDeadEnemy();
+        Collider2D[] caughtColliders = Physics2D.OverlapCircleAll(transform.position, _detectRadius, _enemyLayer);
 
         float minDistans = float.MaxValue;
 
         Enemy nearEnemy = null;
 
-        for (int i = 0; i < _enemies.Count; i++)
+        for (int i = 0; i < caughtColliders.Length; i++)
         {
-            if (_enemies[i] == null)
-            {
+            if (caughtColliders[i] == null || caughtColliders[i].isTrigger)
                 continue;
-            }
 
-            float distans = (_enemies[i].transform.position - transform.position).sqrMagnitude;
-
-            if (distans < minDistans)
+            if (caughtColliders[i].TryGetComponent(out Enemy enemy))
             {
-                minDistans = distans;
+                float distans = (caughtColliders[i].transform.position - transform.position).sqrMagnitude;
 
-                nearEnemy = _enemies[i];
+                if (distans < minDistans)
+                {
+                    minDistans = distans;
+
+                    nearEnemy = enemy;
+                }
             }
         }
 
         return nearEnemy;
-    }
-
-    private void ClearDeadEnemy()
-    {
-        for (int i = _enemies.Count - 1; i >= 0; i--)
-        {
-            if (_enemies[i] == null)
-            {
-                _enemies.RemoveAt(i);
-            }
-        }
     }
 }
