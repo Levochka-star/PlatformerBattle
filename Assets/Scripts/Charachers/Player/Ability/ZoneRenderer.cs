@@ -12,16 +12,18 @@ public class ZoneRenderer : MonoBehaviour
     {
         _sprite = GetComponent<SpriteRenderer>();
 
-        SetSize(_detector.DetectRadius*2f);
+        float diameter = _detector.DetectRadius * 2f;
+
+        SetSize(diameter);
 
         _sprite.enabled = false;
 
-        _abilityVampirism.AbilityEnabled += ChangeVisibility;
+        _abilityVampirism.AbilityVisiblied += ChangeVisibility;
     }
 
     private void OnDisable()
     {
-        _abilityVampirism.AbilityEnabled -= ChangeVisibility;
+        _abilityVampirism.AbilityVisiblied -= ChangeVisibility;
     }
 
     private void SetSize(float diameter)

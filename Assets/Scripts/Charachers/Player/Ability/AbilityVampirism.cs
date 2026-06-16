@@ -20,7 +20,7 @@ public class AbilityVampirism : MonoBehaviour
 
     private bool _isReady;
 
-    public event Action<bool> AbilityEnabled;
+    public event Action<bool> AbilityVisiblied;
     public event Action<float> ChangedFillPoint;
 
     private void Awake()
@@ -73,7 +73,7 @@ public class AbilityVampirism : MonoBehaviour
         _isReady = false;
         float currentTime = 0;
 
-        AbilityEnabled?.Invoke(true);
+        AbilityVisiblied?.Invoke(true);
 
         while (currentTime < time)
         {
@@ -91,7 +91,7 @@ public class AbilityVampirism : MonoBehaviour
             ChangedFillPoint?.Invoke((time - currentTime) / time);
         }
 
-        AbilityEnabled?.Invoke(false);
+        AbilityVisiblied?.Invoke(false);
         StartingRecharch();
         _waitWorking = null;
     }
